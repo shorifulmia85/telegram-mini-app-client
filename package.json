@@ -1,0 +1,60 @@
+{
+  "name": "telegram-mini-app-client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "tunnel": "\"C:\\\\tools\\\\ngrok\\\\ngrok.exe\" http 3000 --region=ap"
+  },
+  "dependencies": {
+    "@adsgram/react": "^1.0.2",
+    "@radix-ui/react-avatar": "^1.1.10",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@reduxjs/toolkit": "^2.8.2",
+    "@tailwindcss/vite": "^4.1.11",
+    "@twa-dev/sdk": "^8.0.2",
+    "add": "^2.0.6",
+    "avatar": "^0.1.0",
+    "axios": "^1.11.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.12",
+    "lucide-react": "^0.536.0",
+    "radix-ui": "^1.4.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.5.2",
+    "react-redux": "^9.2.0",
+    "react-router": "^7.8.0",
+    "react-router-dom": "^7.8.2",
+    "shadcn": "^3.2.1",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.11"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@types/node": "^24.2.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "eslint": "^9.30.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "tw-animate-css": "^1.3.6",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.35.1",
+    "vite": "^7.0.4"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.21.2",
+    "lightningcss-linux-x64-gnu": "^1.25.1"
+  }
+}
