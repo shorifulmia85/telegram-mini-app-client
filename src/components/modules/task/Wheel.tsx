@@ -1,23 +1,24 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
-import { MapPin } from "lucide-react"; // Import MapPin icon
+import { MapPin } from "lucide-react";
+import ThickIndicator from "../../ThikIndicator";
 import { Button } from "../../ui/button";
 
 const NUM_SEGMENTS = 10;
 const SEGMENT_ANGLE = 360 / NUM_SEGMENTS;
-const WHEEL_RADIUS = 150; // Radius of the wheel SVG
+const WHEEL_RADIUS = 150;
 
-// Helper to convert degrees to radians
 const toRadians = (angle: number) => angle * (Math.PI / 180);
-
-// Helper to get coordinates on a circle
 const getCoordinates = (angle: number, radius: number) => ({
   x: radius * Math.cos(toRadians(angle)),
   y: radius * Math.sin(toRadians(angle)),
 });
 
 export default function Wheel() {
+  // ✅ নতুন: কেবল ইউজার-ইনিশিয়েটেড স্পিন ট্র্যাক করতে
+  const userInitiatedRef = useRef(false);
+
   const [segments, setSegments] = useState<
     {
       value: string;
@@ -32,38 +33,37 @@ export default function Wheel() {
 
   useEffect(() => {
     generateSegments();
-  }, [isSpinning]);
+  }, []);
 
   const generateSegments = () => {
-    // Adjusted to 10 segments, maintaining alternating colors and key values
     const fixedSegments = [
-      { value: "$5", color: "white", textColor: "#3f51b5" },
+      { value: "500", color: "white", textColor: "#3f51b5" },
       {
-        value: "$10",
+        value: "100",
         color: "linear-gradient(to bottom right, #3f51b5, #2196f3)",
         textColor: "white",
       },
-      { value: "ZERO", color: "white", textColor: "#3f51b5" },
+      { value: "400", color: "white", textColor: "#3f51b5" },
       {
-        value: "$2",
+        value: "1000",
         color: "linear-gradient(to bottom right, #3f51b5, #2196f3)",
         textColor: "white",
       },
-      { value: "$50", color: "white", textColor: "#3f51b5" },
+      { value: "300", color: "white", textColor: "#3f51b5" },
       {
-        value: "$1",
+        value: "2000",
         color: "linear-gradient(to bottom right, #3f51b5, #2196f3)",
         textColor: "white",
       },
-      { value: "$20", color: "white", textColor: "#e91e63" }, // Special color for JACKPOT
+      { value: "500", color: "white", textColor: "#e91e63" },
       {
-        value: "$20",
+        value: "200",
         color: "linear-gradient(to bottom right, #e91e63, #ff4081)",
         textColor: "white",
       },
-      { value: "$15", color: "white", textColor: "#e91e63" },
+      { value: "700", color: "white", textColor: "#e91e63" },
       {
-        value: "$100",
+        value: "200",
         color: "linear-gradient(to bottom right, #e91e63, #ff4081)",
         textColor: "white",
       },
@@ -73,94 +73,63 @@ export default function Wheel() {
 
   const spinWheel = () => {
     if (isSpinning) return;
-
+    userInitiatedRef.current = true; // ✅ ইউজার স্পিন শুরু করেছে
     setIsSpinning(true);
-    // generateSegments(); // Only generate once or if you want new values each spin
 
-    const minRotations = 5; // Minimum full rotations
-    const maxRotations = 10; // Maximum full rotations
+    const minRotations = 5,
+      maxRotations = 10;
     const randomFullRotations =
       Math.floor(Math.random() * (maxRotations - minRotations + 1)) +
       minRotations;
-    const randomStopAngle = Math.random() * 360; // Random angle within 0-360 degrees
+    const randomStopAngle = Math.random() * 360;
 
-    // Ensure the new rotation is always greater than the current rotation to force forward spin
     const newTargetRotation =
       rotation + randomFullRotations * 360 + randomStopAngle;
-
     setRotation(newTargetRotation);
   };
 
   const handleSpinComplete = () => {
     setIsSpinning(false);
 
-    // Calculate the effective rotation after spin (0-360 degrees)
-    // Ensure it's positive.
+    // ✅ ইউজার স্পিন না করলে রেজাল্ট দেখাবো না
+    if (!userInitiatedRef.current) return;
+
     const effectiveRotation = ((rotation % 360) + 360) % 360;
-
-    // The indicator is at the top (0 degrees relative to the container).
-    // In SVG coordinates (right is 0, down is 90, top is 270), the indicator points to 270 degrees.
-    // We need to find which segment's original angle range contains the angle that is now at 270 degrees.
-    // The angle on the wheel that ends up under the indicator.
-    const indicatorAngleOnWheel = (270 - effectiveRotation + 360) % 360;
-
+    const indicatorAngleOnWheel = (270 - effectiveRotation + 360) % 360; // top pointer
     const winningIndex = Math.floor(indicatorAngleOnWheel / SEGMENT_ANGLE);
     const winningSegment = segments[winningIndex];
+    if (!winningSegment) return;
 
-    toast.success(`Win: ${winningSegment.value}`, {
-      position: "top-center",
-      style: {
-        background: "#fff",
-        color: "#333",
-        boxShadow: "0 0 15px rgba(0,0,0,0.2)",
-      },
-      iconTheme: {
-        primary: "#FFD700",
-        secondary: "#333",
-      },
-    });
+    toast.success(`Win: ${winningSegment.value}`, { position: "top-center" });
+
+    userInitiatedRef.current = false; // ✅ রিসেট
   };
 
   return (
     <div className="flex flex-col items-center justify-center ">
-      <div className="relative w-[350px] h-[350px] flex items-center justify-center">
-        {/* Top Indicator - MapPin Icon */}
-        <div className="mt-8 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full z-20">
-          <MapPin
-            className="text-background" // Gold color for the icon
-            size={50} // Adjust size as needed
-            style={{ filter: "drop-shadow(0 5px 5px rgba(0,0,0,0.2))" }} // Add shadow for depth
-          />
-        </div>
-
-        {/* Wheel */}
+      <div className=" relative w-[300px] h-[300px] flex items-center justify-center">
+        {/* spinning wheel ONLY */}
         <motion.div
           ref={wheelRef}
-          className="relative w-[280px] h-[280px] rounded-full border-[10px] border-[#3f51b5] flex items-center justify-center"
+          className="relative w-[250px] h-[250px] rounded-full flex items-center justify-center"
           style={{
-            background: "#fff", // White background for the wheel
-            boxShadow: "0 10px 20px rgba(0,0,0,0.2)", // Soft shadow
-            border: "10px solid #3c0af1ff", // Outer blue border
-            outline: "5px solid #1d12b3ff", // Inner gold border
-            outlineOffset: "-6px", // Ensure outline is inside the border
+            background: "#fff",
+            boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
+            border: "10px solid #6457e4",
+            outline: "5px solid #6457e4",
+            outlineOffset: "-6px",
           }}
+          initial={false} // ✅ মাউন্টে কোনো ইনিশিয়াল অ্যানিমেশন নয়
           animate={{ rotate: rotation }}
-          transition={{
-            // type: "tween", // Changed to tween for linear motion
-            duration: 5, // 5 seconds spin duration
-            // ease: "easeOutCubic", // Smooth deceleration
-          }}
+          transition={{ duration: isSpinning ? 5 : 0 }} // ✅ কেবল স্পিনিং হলে ডিউরেশন
           onAnimationComplete={handleSpinComplete}
         >
-          <svg viewBox={`-150 -150 300 300`} className="w-full h-full">
+          <svg viewBox="-150 -150 300 300" className="w-full h-full">
             {segments.map((segment, index) => {
               const startAngle = index * SEGMENT_ANGLE;
               const endAngle = (index + 1) * SEGMENT_ANGLE;
-
               const p1 = getCoordinates(startAngle, WHEEL_RADIUS);
               const p2 = getCoordinates(endAngle, WHEEL_RADIUS);
-
-              // Create a temporary SVG element to apply the gradient
               const gradientId = `gradient-${index}`;
               const gradientStyle = segment.color.startsWith("linear-gradient")
                 ? segment.color.replace("linear-gradient(", "").replace(")", "")
@@ -177,12 +146,10 @@ export default function Wheel() {
                         x2="100%"
                         y2="100%"
                       >
-                        {gradientStyle.split(", ").map((color, i) => (
+                        {gradientStyle.split(", ").map((color, i, arr) => (
                           <stop
                             key={i}
-                            offset={`${
-                              (i / (gradientStyle.split(", ").length - 1)) * 100
-                            }%`}
+                            offset={`${(i / (arr.length - 1)) * 100}%`}
                             stopColor={color}
                           />
                         ))}
@@ -196,7 +163,7 @@ export default function Wheel() {
                         ? `url(#${gradientId})`
                         : segment.color
                     }
-                    stroke="#ccc" // Light stroke for separation
+                    stroke="#ccc"
                     strokeWidth="1"
                   />
                   <text
@@ -215,7 +182,6 @@ export default function Wheel() {
                     fill={segment.textColor}
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    // Rotate text to be upright when the segment is at the top
                     transform={`rotate(${
                       startAngle + SEGMENT_ANGLE / 2 + 90
                     }, ${
@@ -239,19 +205,23 @@ export default function Wheel() {
               );
             })}
           </svg>
-          {/* Central hub - small blue circle */}
-          <div
-            className="absolute w-20 h-20 rounded-full bg-[#3c0af1ff] border-4 border-white"
-            style={{
-              boxShadow: "0 0 10px rgba(207, 14, 14, 0.2)",
-            }}
-          />
         </motion.div>
+
+        {/* FIXED center indicator */}
+        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40">
+          <ThickIndicator
+            size="md"
+            animated={false}
+            ringColor="border-red-500"
+            ringBg="bg-green-100"
+          />
+        </div>
       </div>
+
       <Button
         onClick={spinWheel}
         disabled={isSpinning}
-        className="w-full mt-5 px-5 py-8 text-lg font-bold bg-primary text-background rounded-md"
+        className="px-5 py-4 font-bold bg-[var(--tma-secondary)] rounded-full"
       >
         {isSpinning ? "Spinning..." : "Spin & Win"}
       </Button>

@@ -1,9 +1,9 @@
 // src/components/TmaTabs.tsx
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
-import { useGetAllTaskQuery } from "../redux/features/taskApi/taskApi";
+import { useGetAllTaskQuery } from "../../../redux/features/taskApi/taskApi";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 import AdViewCard from "./AdViewCard";
 import VisitCard from "./VisitCard";
 
@@ -17,6 +17,7 @@ export interface Task {
   cooldownSec: number;
   perUserCap: number;
   status: string;
+  completedCount: number;
   link?: string;
   createdAt: string;
   updatedAt: string;
@@ -100,7 +101,7 @@ export default function TmaTabs() {
           <motion.div
             layout
             layoutId="tabActivePill"
-            className="pointer-events-none absolute top-0 h-full rounded-md bg-[#bd481d]"
+            className=" pointer-events-none absolute top-0 h-full rounded-md  bg-[#1d5bea]"
             animate={{ left: indicator.left, width: indicator.width }}
             transition={{
               type: "spring",
@@ -197,7 +198,7 @@ export default function TmaTabs() {
             animate="enter"
             exit="exit"
           >
-            <TabsContent value="tab-3" className="w-full">
+            <TabsContent value="tab-3" className="w-full ">
               <motion.div
                 className="mt-3 grid w-full grid-cols-1 gap-2 [&>*]:col-span-1 [&>*]:w-full [&>*]:max-w-none"
                 variants={listVariants}

@@ -15,7 +15,7 @@ const navigation: NavItem[] = [
   { name: "Home", icon: Home, href: "/" },
   { name: "Earn", icon: Pickaxe, href: "/earn" },
   { name: "Leaderboard", icon: Trophy, href: "/leaderboard" },
-  { name: "Refer", icon: Users, href: "/refer" },
+  { name: "Friends", icon: Users, href: "/refer" },
   { name: "Wallet", icon: Wallet, href: "/wallet" },
 ];
 
@@ -23,12 +23,12 @@ export function BottomNavigation() {
   const { pathname } = useLocation();
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 mb-5 px-4 md:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-50  md:hidden  border-t border-white/20">
       <motion.nav
         initial={{ y: 32, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 400, damping: 28 }}
-        className="mx-auto flex h-20 tma-bottom-nav rounded-2xl px-2 shadow-lg backdrop-blur"
+        className="mx-auto flex h-20  bg-[#141241] px-2 shadow-lg backdrop-blur"
       >
         {navigation.map((item) => {
           // nested route support: "/" exact, others prefix match

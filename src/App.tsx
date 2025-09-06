@@ -5,7 +5,10 @@ import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div className=" min-h-screen w-full tma-app  text-white">
+    <div
+      className=" min-h-screen w-full bg-[var(--tma-primary)]
+  text-white"
+    >
       {/* keep content above bg */}
       <BackButtonController />
       {/* add bottom padding so navbar doesn't cover content (adjust if your navbar height changes) */}

@@ -14,6 +14,8 @@ export const taskApi = baseApi.injectEndpoints({
       query: () => ({
         url: "/task",
       }),
+
+      providesTags: ["TASK"],
     }),
   }),
 });

@@ -8,7 +8,7 @@ export const completeTaskApi = baseApi.injectEndpoints({
         method: "POST",
       }),
 
-      invalidatesTags: ["USER"],
+      invalidatesTags: ["USER", "TASK"],
     }),
 
     getMyTask: builder.query({

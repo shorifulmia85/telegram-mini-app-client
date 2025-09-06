@@ -7,7 +7,7 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: axiosBaseQuery(),
   endpoints: () => ({}),
-  tagTypes: ["USER"],
+  tagTypes: ["USER", "TASK"],
 });
 
 // Export hooks for usage in functional components, which are

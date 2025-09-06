@@ -6,11 +6,11 @@
    ========================= */
 :root {
   /* Brand palette from the shot */
-  --tma-primary: #1a1cef; /* electric blue */
-  --tma-secondary: #bd481d; /* orange-red accent */
-  --tma-text: #f0f0f1; /* near-white */
+  --tma-primary: #050d31; /* electric blue */
+  --tma-secondary: #1d58e4; /* orange-red accent */
+  --tma-text: #fff; /* near-white */
   --tma-muted: #9599ad; /* muted grey */
-  --tma-mini-card: #4b3bda62; /* muted grey */
+  --tma-mini-card: #1b2048; /* muted grey */
 
   /* Surfaces / background stops */
   --tma-surface-0: #06060c; /* deep near-black */

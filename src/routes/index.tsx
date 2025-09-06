@@ -7,6 +7,8 @@ import AuthGuard from "../utils/AuthGuard";
 import { Role } from "../constants";
 import type { TUser } from "../types";
 import Leaderboard from "../pages/Leaderboard";
+import Refer from "../pages/Refer";
+import Wallet from "../pages/Wallet";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ export const router = createBrowserRouter([
       {
         path: "leaderboard",
         Component: Leaderboard,
+      },
+      {
+        path: "refer",
+        Component: Refer,
+      },
+      {
+        path: "wallet",
+        Component: Wallet,
       },
       {
         path: "spin",
