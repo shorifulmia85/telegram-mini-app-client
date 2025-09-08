@@ -101,7 +101,7 @@ export function PodiumItem({
       {/* name & points */}
       <div className="text-center">
         <p className="font-semibold max-w-[8.5rem] truncate">{name || "—"}</p>
-        <p className="text-xs text-white/70">{points.toLocaleString()} PADS</p>
+        <p className="text-sm text-white/70">{points.toLocaleString()} </p>
       </div>
     </div>
   );

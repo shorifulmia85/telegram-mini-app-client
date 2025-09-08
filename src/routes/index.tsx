@@ -7,8 +7,8 @@ import AuthGuard from "../utils/AuthGuard";
 import { Role } from "../constants";
 import type { TUser } from "../types";
 import Leaderboard from "../pages/Leaderboard";
-import Refer from "../pages/Refer";
 import Wallet from "../pages/Wallet";
+import Refer from "../pages/Refer";
 
 export const router = createBrowserRouter([
   {

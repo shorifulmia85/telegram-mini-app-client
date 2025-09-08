@@ -1,9 +1,13 @@
 import { ChevronRight, CoinsIcon, Wallet2 } from "lucide-react";
 import { useGetMeQuery } from "../redux/features/authApi/authApi";
 import { Button } from "../components/ui/button";
+import Loading from "../components/Loading";
 
 const Wallet = () => {
   const { data, isLoading } = useGetMeQuery(undefined);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div>
       <h1 className="text-center text-2xl font-semibold">

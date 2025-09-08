@@ -22,14 +22,14 @@ function waitFor(cond: Waiter, timeoutMs = 8000, everyMs = 50) {
 
 const inflightBySrc: Record<string, Promise<void>> = {};
 
-function ensureScript(src: string) {
+async function ensureScript(src: string) {
   if (typeof window === "undefined") return Promise.resolve();
 
   // already present
   if (document.querySelector(`script[src="${src}"]`)) return Promise.resolve();
 
   // in-flight cache
-  if (inflightBySrc[src]) return inflightBySrc[src];
+  // if (inflightBySrc[src]) return inflightBySrc[src];
 
   inflightBySrc[src] = new Promise<void>((resolve, reject) => {
     const s = document.createElement("script");

@@ -19,8 +19,6 @@ const ThickIndicator = ({
   size = "xl",
   animated = true,
   className,
-  ringColor = "#050d31", // default border color
-  ringBg = "#050d31", // default background color
 }: ThickIndicatorProps) => {
   const triangleSize = {
     sm: "border-l-[10px] border-r-[10px] border-b-[16px]",

@@ -11,6 +11,7 @@
   --tma-text: #fff; /* near-white */
   --tma-muted: #9599ad; /* muted grey */
   --tma-mini-card: #1b2048; /* muted grey */
+  --tma-warning: #85e22d;
 
   /* Surfaces / background stops */
   --tma-surface-0: #06060c; /* deep near-black */
@@ -308,4 +309,31 @@ body {
 }
 .tma-muted {
   color: var(--tma-muted);
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient 6s ease infinite;
+  background-size: 300% 300%;
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

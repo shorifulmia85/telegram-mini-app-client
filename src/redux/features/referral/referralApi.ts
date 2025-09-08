@@ -9,17 +9,21 @@ export const referralApi = baseApi.injectEndpoints({
       }),
     }),
 
-    getMyTask: builder.query({
+    getMyReferrals: builder.query({
       query: () => ({
-        url: "/task/my-task",
+        url: "/referral/my-referrals",
       }),
     }),
-    getAllTask: builder.query({
-      query: () => ({
-        url: "/task",
+    claimedReferral: builder.mutation({
+      query: (id) => ({
+        url: `/referral/unlocked/${id}`,
+        method: "POST",
       }),
     }),
   }),
 });
-export const { useLeaderboardQuery, useGetAllTaskQuery, useGetMyTaskQuery } =
-  referralApi;
+export const {
+  useLeaderboardQuery,
+  useClaimedReferralMutation,
+  useGetMyReferralsQuery,
+} = referralApi;
